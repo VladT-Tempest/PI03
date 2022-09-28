@@ -7,9 +7,16 @@ from bs4 import BeautifulSoup
 import requests
 import json
 import time
+import ccxt
+from datetime import datetime
+import plotly.graph_objects as go
+
+# Use ccxt Criptocurrency Exchange Trading Library
+exchange = ccxt.ftx ()
+exchange.enableRateLimit = True  # enable
 
 #----------------------------------------------------------------------------#
-# Page expands to ull width
+# Page expands to full width
 st.set_page_config(layout="wide")
 #----------------------------------------------------------------------------#
 # Title
@@ -38,11 +45,53 @@ expander_bar.markdown("""
 # page layout
 ## Divide page to 3 columns
 col1 = st.sidebar
-col2, col3 = st.columns((2,1))
+col3, col3 = st.columns((2,1))
 #----------------------------------------------------------------------------#
 # Sidebar + Main panel
-col1.header('Input Options')
+col1.header('Currency Select')
 
 ## Sidebar - Currency price unit
-currency_price_Unit = col1.selectbox('Select currency for price', ('USD', 'BTC'))
+#currency_price_Unit = col1.selectbox('Select currency for price', ('USD', 'BTC'))
 
+## Sidebar - Cryptocurrency selections
+
+@st.cache
+def load_data():
+    marketsDF = pd.DataFrame(exchange.load_markets())
+    marketscut = marketsDF.drop(marketsDF.index[4:25])
+    return marketscut
+
+def get_info_currency(symbol):
+    currency = pd.DataFrame.from_dict(markets[symbol]['info'], orient='index')
+    return currency
+
+markets = load_data()
+
+
+
+selected_coin = col1.radio('Cryptocurrency 👇',
+                ['BTC', 'ETH', 'USDT', 'BNB', 'XRP', 'SOL', 'DOGE', 'DOT', 'MATIC','TRX' ], 
+                )
+
+if selected_coin == 'BTC':
+    col3.dataframe(get_info_currency('BTC/USD'))
+elif selected_coin == 'ETH':
+    col3.dataframe(get_info_currency('ETH/USD'))
+elif selected_coin == 'USDT':
+    col3.dataframe(get_info_currency('USDT/USD'))
+elif selected_coin == 'BNB':
+    col3.dataframe(get_info_currency('BNB/USD'))
+elif selected_coin == 'XRP':
+    col3.dataframe(get_info_currency('XRP/USD'))
+elif selected_coin == 'SOL':
+    col3.dataframe(get_info_currency('SOL/USD'))
+elif selected_coin == 'DOGE':
+    col3.dataframe(get_info_currency('DOGE/USD'))
+elif selected_coin == 'DOT':
+    col3.dataframe(get_info_currency('DOT/USD'))
+elif selected_coin == 'MATIC':
+    col3.dataframe(get_info_currency('MATIC/USD'))
+elif selected_coin == 'TRX':
+    col3.dataframe(get_info_currency('TRX/USD'))
+else:
+    pass
