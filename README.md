@@ -1,4 +1,4 @@
-# PI03 - Analytics
+# PI03 - Analytics - Alejandro Aguilera W
 
 ![image](https://help.ftx.com/hc/article_attachments/4409994973844/mceclip0.png)
 

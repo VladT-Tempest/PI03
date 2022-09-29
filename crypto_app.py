@@ -29,7 +29,7 @@ st.image(image, width=300)
 
 #st.title('Crypto Top Ten Web App')
 st.markdown("""
-This app retrieves cryptocurrency prices for the top 10 cryptocurrencies
+This app retrieves cryptocurrency prices for 10 of the top cryptocurrencies
 
 """)
 
@@ -38,7 +38,7 @@ This app retrieves cryptocurrency prices for the top 10 cryptocurrencies
 
 expander_bar = st.expander("About")
 expander_bar.markdown("""
-* **Python libraries:** pandas, streamlit, ccxt, numpy, plotly, matplotlib, seaborn, json, time, datetime, requests, PIL
+* **Python libraries:** streamlit, pandas, ccxt, numpy, plotly, matplotlib, seaborn, json, time, datetime, requests, PIL
 * **Data source:** [FTX](https://ftx.com/).
 * **Trading Library:** [ccxt](https://github.com/ccxt/ccxt)
 * This application uses ccxt library to get information from FTX about ten cryptocurrencies
@@ -182,11 +182,15 @@ col2.write('USD')
 
 expander_bar = st.expander("App Data Report")
 expander_bar.markdown("""
-**Steps to get the Information:**
+**Steps that follow the application to get the Information:**
 1. Using CCXT library when opening the application the function load_data_markets() loads a dataframe with the information
 of all cryptocurrencies managed in the exchange FTX.
 
 2. By default the BTC currency information is shown in the 3 columns in which the application is divided.
 
 3. There is another function load_historical_data() to load OHLCV info in other dataframe which is used to show the candlestick chart.
+
+4. From the historical dataframe it is necessary to change  the UNIX timestamp which it is provided by the exchange and pass it to a Gregorian date type.
+
+5. Calculator extract the price of the current crypto to multiply the value typed by the user and get the US equivalent.
 """)
